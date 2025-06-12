@@ -1,6 +1,6 @@
 # TinyBlog - Modern Blogging Platform
 
-TinyBlog is a lightweight blogging platform designed for individuals and small organizations. This modernized version is built with a Python FastAPI backend and React frontend.
+TinyBlog is a lightweight blogging platform designed for individuals and small organizations. This modernized version is built with a Python FastAPI backend and Next.js frontend.
 
 ## Features
 
@@ -22,18 +22,24 @@ TinyBlog is a lightweight blogging platform designed for individuals and small o
   - Pydantic for data validation
 
 - **Frontend**:
-  - React.js
-  - React Router for navigation
-  - React Query for state management
+  - Next.js
+  - React
   - Tailwind CSS for styling
+  - React Query for state management
   - Axios for API communication
+  - TypeScript
+
+- **Deployment**:
+  - Docker
+  - Docker Compose
+  - Nginx for frontend serving
 
 ## Project Structure
 
 ```
 tinyBlog/
 ├── backend/                # FastAPI backend
-│   ├── app/
+│   ├── app/                # Application code
 │   │   ├── api/            # API endpoints
 │   │   ├── core/           # Core functionality
 │   │   ├── db/             # Database models and connections
@@ -41,22 +47,27 @@ tinyBlog/
 │   │   ├── services/       # Business logic
 │   │   └── main.py         # Application entry point
 │   ├── tests/              # Backend tests
+│   ├── .env                # Environment variables
 │   └── requirements.txt    # Python dependencies
 │
-├── frontend/               # React frontend
+├── frontend/               # Next.js frontend
+│   ├── app/                # Next.js app directory
+│   ├── components/         # React components
+│   ├── contexts/           # React contexts
+│   ├── hooks/              # Custom hooks
 │   ├── public/             # Static files
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── contexts/       # React contexts
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # API services
-│   │   ├── utils/          # Utility functions
-│   │   ├── App.js          # Main component
-│   │   └── index.js        # Entry point
+│   ├── services/           # API services
+│   ├── styles/             # CSS styles
+│   ├── types/              # TypeScript type definitions
 │   ├── package.json        # JavaScript dependencies
 │   └── tailwind.config.js  # Tailwind CSS configuration
 │
+├── docker/                 # Docker configuration
+│   ├── backend/            # Backend Docker configuration
+│   └── frontend/           # Frontend Docker configuration
+│
+├── docker-compose.yml      # Docker Compose configuration
+├── docs/                   # Documentation
 └── README.md               # Project documentation
 ```
 
@@ -64,11 +75,34 @@ tinyBlog/
 
 ### Prerequisites
 
-- Python 3.8+
-- Node.js 14+
+- Python 3.10+
+- Node.js 18+
 - MongoDB
+- Docker and Docker Compose (optional, for containerized setup)
 
-### Backend Setup
+### Option 1: Docker Setup (Recommended)
+
+The easiest way to run TinyBlog is using Docker Compose:
+
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd tinyBlog
+   ```
+
+2. Start the application using Docker Compose:
+   ```
+   docker-compose up -d
+   ```
+
+3. Access the application:
+   - Frontend: http://localhost:3002
+   - Backend API: http://localhost:8000
+   - API Documentation: http://localhost:8000/docs
+
+### Option 2: Manual Setup
+
+#### Backend Setup
 
 1. Navigate to the backend directory:
    ```
@@ -86,10 +120,9 @@ tinyBlog/
    pip install -r requirements.txt
    ```
 
-4. Set up environment variables (create a .env file):
+4. Set up environment variables (create a .env file based on .env.example):
    ```
-   MONGODB_URL=mongodb://localhost:27017
-   DATABASE_NAME=tinyblog
+   MONGODB_URI=mongodb://localhost:27017/tinyblog
    SECRET_KEY=your_secret_key
    ALGORITHM=HS256
    ACCESS_TOKEN_EXPIRE_MINUTES=30
@@ -102,7 +135,7 @@ tinyBlog/
 
 6. Access the API documentation at http://localhost:8000/docs
 
-### Frontend Setup
+#### Frontend Setup
 
 1. Navigate to the frontend directory:
    ```
@@ -114,14 +147,14 @@ tinyBlog/
    npm install
    ```
 
-3. Set up environment variables (create a .env file):
+3. Set up environment variables (create a .env.local file):
    ```
-   REACT_APP_API_URL=http://localhost:8000
+   NEXT_PUBLIC_API_URL=http://localhost:8000
    ```
 
 4. Run the development server:
    ```
-   npm start
+   npm run dev
    ```
 
 5. Access the application at http://localhost:3000
