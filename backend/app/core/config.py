@@ -25,8 +25,11 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "TinyBlog"
     
     # MongoDB settings
-    MONGODB_URL: str = "mongodb://localhost:27017"
+    MONGODB_URI: str = "mongodb://admin:password@mongodb:27017/tinyblog?authSource=admin"
+    MONGODB_URL: str = MONGODB_URI  # Alias for backward compatibility
     DATABASE_NAME: str = "tinyblog"
+    
+    # Configuration is handled in the Config class below
     
     # Authentication settings
     ALGORITHM: str = "HS256"
@@ -38,6 +41,8 @@ class Settings(BaseSettings):
     class Config:
         case_sensitive = True
         env_file = ".env"
+        env_file_encoding = "utf-8"
+        extra = "ignore"
 
 
 settings = Settings()
